@@ -1,4 +1,7 @@
-package carsharing;
+package carsharing.daos;
+
+import carsharing.models.Company;
+import carsharing.db.Connector;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;

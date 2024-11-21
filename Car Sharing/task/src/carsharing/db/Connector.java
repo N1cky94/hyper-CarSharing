@@ -1,4 +1,6 @@
-package carsharing;
+package carsharing.db;
+
+import carsharing.db.SqlRuntimeException;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

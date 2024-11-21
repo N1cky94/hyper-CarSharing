@@ -1,4 +1,4 @@
-package carsharing;
+package carsharing.menus;
 
 public class ShutdownThread extends Thread {
 

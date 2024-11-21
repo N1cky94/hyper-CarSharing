@@ -1,4 +1,4 @@
-package carsharing;
+package carsharing.db;
 
 public class SqlRuntimeException extends RuntimeException {
     public SqlRuntimeException() {

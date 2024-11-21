@@ -1,5 +1,9 @@
 package carsharing;
 
+import carsharing.db.Connector;
+import carsharing.menus.MainMenu;
+import carsharing.services.CompanyService;
+
 import java.sql.SQLException;
 
 public class Main {

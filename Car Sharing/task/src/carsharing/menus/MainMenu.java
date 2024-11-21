@@ -1,4 +1,4 @@
-package carsharing;
+package carsharing.menus;
 
 import carsharing.utils.KeyboardUtil;
 

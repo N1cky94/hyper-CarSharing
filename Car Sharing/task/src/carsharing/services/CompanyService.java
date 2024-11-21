@@ -1,4 +1,9 @@
-package carsharing;
+package carsharing.services;
+
+import carsharing.daos.CompanyDao;
+import carsharing.daos.Dao;
+import carsharing.db.Connector;
+import carsharing.models.Company;
 
 import java.util.List;
 
