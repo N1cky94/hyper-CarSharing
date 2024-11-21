@@ -1,8 +1,5 @@
 package carsharing;
 
-import org.h2.jdbcx.JdbcDataSource;
-
-import java.sql.Connection;
 import java.sql.SQLException;
 
 public class Main {
@@ -13,30 +10,21 @@ public class Main {
             dbName = args[1];
         }
 
-        String dbUrl = "jdbc:h2:./src/carsharing/db/%s".formatted(dbName);
+        try (Connector conn = new Connector(dbName)) {
 
-        JdbcDataSource source = new JdbcDataSource();
-        source.setURL(dbUrl);
+            conn.state("create table COMPANY (ID INT, NAME VARCHAR(255))");
+            conn.state("insert into COMPANY (ID, NAME) values (1, 'Colruyt Group')");
 
-        try (Connection conn = source.getConnection()) {
+            Thread.sleep(5_000);
 
-            String sql = "CREATE TABLE COMPANY (" +
-                    "ID INT, " +
-                    "NAME VARCHAR(255));";
-
-            conn.prepareStatement(sql).execute();
-            conn.prepareStatement("insert into COMPANY (ID, NAME) values (1, 'Colruyt Group')").execute();
-
-            Thread.sleep(10_000);
-
-            var result = conn.prepareStatement("select * from COMPANY").executeQuery();
+            var result = conn.query("select * from COMPANY");
             result.next();
             System.out.println(result.getString("NAME"));
             System.out.println(result.getInt("ID"));
 
         } catch (SQLException sqle) {
             System.out.println("SQLException: " + sqle.getMessage());
-        } catch (InterruptedException ie) {
+        } catch (Exception ie) {
             System.out.println("InterruptedException: " + ie.getMessage());
         }
     }
