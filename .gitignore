@@ -1,0 +1,9 @@
+/.idea
+Car Sharing/*
+!Car Sharing/task
+*course*info*.yml
+*course*info*.yaml
+
+.gradle/*
+*build/*
+*out/*
