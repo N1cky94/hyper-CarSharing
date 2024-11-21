@@ -20,12 +20,20 @@ public class Connector implements AutoCloseable {
         this("CarSharing_DB");
     }
 
-    public void state(String sql) throws SQLException {
-        connection.prepareStatement(sql).execute();
+    public void state(String sql) {
+        try {
+            connection.prepareStatement(sql).execute();
+        } catch (SQLException e) {
+            throw new SqlRuntimeException("State failed: " + sql, e);
+        }
     }
 
-    public ResultSet query(String sql) throws SQLException {
-        return connection.prepareStatement(sql).executeQuery();
+    public ResultSet query(String sql) {
+        try {
+            return connection.prepareStatement(sql).executeQuery();
+        } catch (SQLException e) {
+            throw new SqlRuntimeException("Query failed: " + sql, e);
+        }
     }
 
     @Override
