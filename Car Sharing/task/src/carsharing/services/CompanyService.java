@@ -9,7 +9,7 @@ import java.util.List;
 
 public class CompanyService {
     private static CompanyService instance;
-    private final Dao dao;
+    private final Dao<Company> dao;
 
     private CompanyService(Connector connector) {
         this.dao = new CompanyDao(connector);
