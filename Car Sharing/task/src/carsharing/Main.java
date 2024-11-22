@@ -46,7 +46,6 @@ public class Main {
                         FOREIGN KEY (COMPANY_ID) REFERENCES COMPANY(ID)
                     );""");
         } catch (SqlRuntimeException sre) {
-            sre.printStackTrace();
             System.out.println("Table CAR already exists!");
         }
 

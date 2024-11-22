@@ -41,8 +41,18 @@ public class ManagerMenu {
                 return;
             }
 
-            System.out.println("Company list:");
+            System.out.println("Choose a company:");
             companies.forEach(System.out::println);
+            System.out.println("0. Back");
+
+            int choice = KeyboardUtil.readInt();
+            if (choice == 0) {
+                return;
+            }
+
+            Company company = service.getCompany(choice);
+            System.out.println(company.getName());
+            // todo: some logic for the new menu
 
         } catch (SqlRuntimeException sre) {
             System.out.println("The company list is empty!");
