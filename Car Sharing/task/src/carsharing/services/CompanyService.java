@@ -3,6 +3,7 @@ package carsharing.services;
 import carsharing.daos.CompanyDao;
 import carsharing.daos.Dao;
 import carsharing.db.Connector;
+import carsharing.db.SqlRuntimeException;
 import carsharing.models.Company;
 
 import java.util.List;
@@ -34,5 +35,10 @@ public class CompanyService {
 
     public void createCompany(String name) {
         dao.save(new Company(name));
+    }
+
+    public Company getCompany(int id) {
+        return dao.findById(id)
+                .orElseThrow(SqlRuntimeException::new);
     }
 }

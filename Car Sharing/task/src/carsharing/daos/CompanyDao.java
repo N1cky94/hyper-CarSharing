@@ -13,6 +13,7 @@ import java.util.Optional;
 public class CompanyDao implements Dao<Company> {
     private static final String FIND_ALL = "select * from COMPANY";
     private static final String SAVE_NEW = "insert into COMPANY (name) values ('%s')";
+    private static final String GET_BY_ID = "select * from COMPANY where ID = %d";
     private final Connector connector;
 
     public CompanyDao(Connector connector) {
@@ -40,7 +41,18 @@ public class CompanyDao implements Dao<Company> {
 
     @Override
     public Optional<Company> findById(int id) {
-        return Optional.empty();
+        ResultSet set = connector.query(GET_BY_ID.formatted(id));
+        try {
+
+            set.next();
+            return Optional.of(new Company(
+                    set.getInt("ID"),
+                    set.getString("NAME")
+            ));
+
+        } catch (SQLException sqle) {
+            return Optional.empty();
+        }
     }
 
     @Override
