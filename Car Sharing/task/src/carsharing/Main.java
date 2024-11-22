@@ -17,11 +17,8 @@ public class Main {
 
         try (Connector conn = new Connector(dbName)) {
             CompanyService.registerInstanceWith(conn);
-            try {
-                createCompanyTable(conn);
-            } catch (SQLException | SqlRuntimeException sre) {
-                System.out.println("Table already exists!");
-            }
+            createTables(conn);
+
 
             while (true) {
                 MainMenu.show();
@@ -33,8 +30,26 @@ public class Main {
         }
     }
 
-    public static void createCompanyTable(Connector connector) throws SQLException {
-        connector.state("CREATE TABLE COMPANY(ID INT AUTO_INCREMENT PRIMARY KEY, NAME VARCHAR(255) UNIQUE NOT NULL)");
+    public static void createTables(Connector connector) {
+        try {
+            connector.state("CREATE TABLE COMPANY(ID INT AUTO_INCREMENT PRIMARY KEY, NAME VARCHAR(255) UNIQUE NOT NULL)");
+        } catch (SqlRuntimeException sre) {
+            System.out.println("Table COMPANY already exists!");
+        }
+
+        try {
+            connector.state("""
+                    CREATE TABLE CAR(
+                        ID INT AUTO_INCREMENT PRIMARY KEY,
+                        NAME VARCHAR(255) UNIQUE NOT NULL,
+                        COMPANY_ID INT NOT NULL,
+                        FOREIGN KEY (COMPANY_ID) REFERENCES COMPANY(ID)
+                    );""");
+        } catch (SqlRuntimeException sre) {
+            sre.printStackTrace();
+            System.out.println("Table CAR already exists!");
+        }
+
     }
 
     public static void insertCompany(int id, String name, Connector connector) throws SQLException {
