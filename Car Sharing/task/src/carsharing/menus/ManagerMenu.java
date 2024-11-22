@@ -35,6 +35,12 @@ public class ManagerMenu {
         try {
 
             List<Company> companies = service.getCompanies();
+
+            if (companies.isEmpty()) {
+                System.out.println("The company list is empty!");
+                return;
+            }
+
             System.out.println("Company list:");
             companies.forEach(System.out::println);
 
@@ -44,6 +50,11 @@ public class ManagerMenu {
     }
 
     private static void createCompany() {
+        System.out.println();
+        System.out.println("Enter the company name:");
+        String name = KeyboardUtil.readLine();
 
+        service.createCompany(name);
+        System.out.println("The company was created!");
     }
 }

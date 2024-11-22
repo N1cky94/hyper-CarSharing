@@ -1,6 +1,7 @@
 package carsharing;
 
 import carsharing.db.Connector;
+import carsharing.db.SqlRuntimeException;
 import carsharing.menus.MainMenu;
 import carsharing.services.CompanyService;
 
@@ -16,13 +17,19 @@ public class Main {
 
         try (Connector conn = new Connector(dbName)) {
             CompanyService.registerInstanceWith(conn);
+            try {
+                createCompanyTable(conn);
+            } catch (SQLException | SqlRuntimeException sre) {
+                System.out.println("Table already exists!");
+            }
 
             while (true) {
                 MainMenu.show();
             }
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());;
+            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 
