@@ -31,4 +31,8 @@ public class CompanyService {
     public List<Company> getCompanies() {
         return dao.findAll();
     }
+
+    public void createCompany(String name) {
+        dao.save(new Company(name));
+    }
 }
